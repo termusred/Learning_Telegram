@@ -29,21 +29,39 @@
         padding-top: 2rem;
         background-color: rgb(179, 176, 176);
     }
+    .own{
+        position: absolute;
+        right: 2rem;
+        width: 90%;
+        padding: 1rem;
+        background-color: rgb(142, 187, 182);
+
+    }
     .messages {
+        display: flex;
+        flex-direction: column;
         margin: 1rem;
         padding: 1rem;
-        border: 1px solid #ccc;
-        background-color: #f9f9f9;
+        gap: 1rem;
         width: 90vw;
-        max-width: 30rem;
-        height: 20rem;
-        overflow-y: auto;
+        height: 90vh;
+        background-color: #f9f9f9;
+    }
+    .income{
+        position: absolute;
+        left: 2rem;
+        width: 90%;
+        padding: 1rem;
+        background-color: rgb(183, 183, 183);
+
     }
 </style>
 <body>
     <div class="box">
         <div>
-            <div class="messages" id="messages"></div>
+            <div class="messages" id="messages">
+
+            </div>
             <form class="form" id="messageForm">
                 <div>
                     <label for="text" class="action">Enter message</label>
@@ -67,12 +85,17 @@
             const message = messageInput.value.trim();
             if (message) {
                 socket.emit("message", message);
+                const messageElement = document.createElement("div");
+                messageElement.textContent = message;
+                messageElement.className = "own"
+                messages.appendChild(messageElement)
                 messageInput.value = "";
             }
         });
         socket.on("message", (msg) => {
             const messageElement = document.createElement("div");
             messageElement.textContent = msg;
+            messageElement.className = "income"
             messages.appendChild(messageElement);
             messages.scrollTop = messages.scrollHeight;
         });

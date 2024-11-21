@@ -5,7 +5,9 @@ import { readFile } from "fs/promises";
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer);
+const io = new Server(httpServer  , {
+    connectionStateRecovery: {}
+});
 
 app.get("/", async (req, res) => {
     const file = await readFile("./menu/main.html", "utf8");
